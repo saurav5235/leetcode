@@ -1,0 +1,56 @@
+class Solution 
+{
+    int flag=0;
+    void fun(TreeNode root,int x)
+    {
+        if(x < root.val && root.left == null)
+        {
+            TreeNode n = new TreeNode(x);
+            n.left=null;
+            n.right=null;
+            root.left = n;
+            flag=1;
+            return;
+        }
+        
+        if(x>root.val && root.right==null)
+        {
+            TreeNode n = new TreeNode(x);
+            n.left=null;
+            n.right=null;
+            root.right = n;
+            flag=1;
+            return;
+        }
+        
+        if(flag==0 && x<root.val)
+        {
+            fun(root.left,x);
+        }
+        
+        if(flag==0 && x>root.val) 
+        {
+            fun(root.right,x);
+        }
+    }
+    
+    public TreeNode bstFromPreorder(int[] preorder) 
+    {   
+        int n = preorder.length;
+        
+        if(n==0)
+            return null;
+        TreeNode head = new TreeNode();
+        head.val=preorder[0];
+        head.left=null;
+        head.right=null;
+        
+        for(int i=1;i<n;i++)
+        {
+            flag=0;
+            fun(head,preorder[i]);
+        }
+        
+        return head;
+    }
+}
